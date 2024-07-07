@@ -1,0 +1,27 @@
+[run]
+omit = 
+    ./vbvenv/* 
+    *tests* 
+    *apps.py 
+    *manage.py 
+    *__init__.py 
+    */migrations/* 
+    *asgi* 
+    *wsgi* 
+    *admin.py 
+    *urls.py 
+    *fixtures.py
+
+[report]
+omit = 
+    ./vbvenv/* 
+    *tests* 
+    *apps.py 
+    *manage.py 
+    *__init__.py 
+    */migrations/* 
+    *asgi* 
+    *wsgi* 
+    *admin.py 
+    *urls.py 
+    *fixtures.py
