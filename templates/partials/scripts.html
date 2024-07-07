@@ -1,3 +1,8 @@
 {% load static %}
 <script src="{% static "bootstrap/js/bootstrap.bundle.min.js" %}" defer></script>
 <script src="{% static "js/sidebar.js" %}" defer></script>
+<script>
+    document.body.addEventListener("htmx:configRequest", (event) => {
+        event.detail.headers["X-CSRFToken"] = "{{ csrf_token }}";
+    });
+</script>
