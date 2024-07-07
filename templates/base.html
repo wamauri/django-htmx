@@ -1,0 +1,23 @@
+{% load static %}
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+  <head><script src="{% static "js/color-modes.js" %}"></script>
+    {% include "partials/head.html" %}
+  </head>
+  <body>
+    <!-- Dark/Light mode -->
+    {% include "partials/color_mode.html" %}
+    <main class="d-flex flex-nowrap">
+      <!-- Sidebar -->
+      {% include "partials/sidebar.html" %}
+      <!-- Divider -->
+      <div class="b-example-divider b-example-vr" hx-swap-oob="true"></div>
+      <!-- Content -->
+      <div class="container-fluid" id="target" hx-swap-oob="true">
+        {% block content %}
+        {% endblock content %}
+      </div>
+    </main>
+    {% include "partials/scripts.html" %}
+  </body>
+</html>
