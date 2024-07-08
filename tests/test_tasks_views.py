@@ -2,7 +2,6 @@ from django.test import Client
 from django.urls import reverse
 
 from tasks.models import Tasks
-from tasks import views
 from .fixtures import (
     all_tasks, context, tasks_form_data,
     task_instace
@@ -53,3 +52,18 @@ class TestTasksViews:
         url = reverse('delete-task', kwargs={'task_id': task_instace.id})
         res = self.c.delete(url)
         assert res.status_code == 200
+
+    def test_get_task_view(self, all_tasks):
+        url = reverse('task', kwargs={'task_id': all_tasks[0].id})
+        res = self.c.get(url)
+        assert res.context[0]['task'].name == 'A'
+
+    def test_task_edit_view(self, all_tasks):
+        task_id = all_tasks[0].id
+        instance = all_tasks.filter(id=task_id)[0]
+        assert instance.name == 'A'
+
+        url = reverse('edit-task', kwargs={'task_id': task_id})
+        res = self.c.post(url, data={'name': 'Task Name'})
+        assert res.context[0]['tasks'][0].name == 'Task Name'
+        assert res.context[0]['tasks'][0].name != 'A'
