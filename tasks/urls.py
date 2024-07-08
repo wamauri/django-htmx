@@ -28,4 +28,14 @@ urlpatterns = [
         view=views.tasks_undo, 
         name='undo-task'
     ),
+    path(
+        route='<int:task_id>/', 
+        view=views.get_task, 
+        name='task'
+    ),
+    path(
+        route='edit/<int:task_id>/', 
+        view=views.task_edit, 
+        name='edit-task'
+    ),
 ]

@@ -1,0 +1,32 @@
+<ul class="list-group list-group-flush d-grid gap-2 col-8 mx-auto" id="tasks">
+  {% for task in tasks %}
+    <li class="d-flex justify-content-between list-group-item list-group-item-action list-group-item-primary rounded-2 border border-5">
+      <div class="d-flex align-items-center">
+        {{ task.name }}
+      </div>
+      <div>
+        <button class="btn btn-sm btn-outline-success"
+          type="button"
+          hx-put="{% url "done-task" task.id %}"
+          hx-trigger="click"
+          hx-target="#tasks_done">
+          <i class="bi-check-circle"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-primary"
+          hx-get="{% url 'task' task.id %}"
+          hx-trigger="click"
+          hx-target="#taskForm"
+          hx-swap="outerHTML">
+          <i class="bi-pen"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-danger"
+          hx-delete="{% url "delete-task" task.id %}"
+          hx-target="#tasks"
+          hx-confirm="Are you sure?"
+          kx-trigger="click">
+          <i class="bi-trash3"></i>
+        </button>
+      </div>
+    </li>
+  {% endfor %}
+</ul>

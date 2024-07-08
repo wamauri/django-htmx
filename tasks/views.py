@@ -27,9 +27,29 @@ def change_task_done(task_id: int, done: bool = False):
     task.save()
 
 
+def change_task_name(request, task_id: int):
+    name = request.POST.get('name')
+    task = Tasks.objects.get(id=task_id)
+    task.name = name
+    task.save()
+
+
 @require_http_methods(['GET'])
 def tasks(request):
     context = build_context()
+
+    return render(
+        request=request, 
+        template_name='tasks.html', 
+        context=context
+    )
+
+
+@require_http_methods(['GET'])
+def get_task(request, task_id):
+    task = Tasks.objects.get(id=task_id)
+    context = build_context()
+    context['task'] = task
 
     return render(
         request=request, 
@@ -66,6 +86,18 @@ def tasks_done(request, task_id):
 @require_http_methods(['PUT'])
 def tasks_undo(request, task_id):
     change_task_done(task_id=task_id)
+    context = build_context()
+
+    return render(
+        request=request, 
+        template_name='tasks.html', 
+        context=context
+    )
+
+
+@require_http_methods(['POST'])
+def task_edit(request, task_id):
+    change_task_name(request=request, task_id=task_id)
     context = build_context()
 
     return render(

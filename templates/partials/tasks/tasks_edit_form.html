@@ -1,0 +1,20 @@
+<div class="d-grid gap-2 col-8 mx-auto">
+  <form method="post">
+    <div class="row">
+      <div class="col-10">
+        <input class="form-control form-control-lg" type="text" name="name" value="{{ task.name }}">
+      </div>
+      <div class="col-2 d-grid">
+        <button 
+          class="btn btn-outline-primary btn-lg" 
+          type="button"
+          hx-trigger="click"
+          hx-post="{% url 'edit-task' task.id %}"
+          hx-target="this">
+          SAVE
+        </button>
+      </div>
+    </div>
+  </form>
+  <li class="border-top my-3" style="list-style-type: none;"></li>
+</div>

@@ -5,76 +5,11 @@
   <div class="text-center row align-items-center mt-lg-5">
     <h1 class="col">ToDo List</h1>
   </div>
-  <div class="d-grid gap-2 col-8 mx-auto">
-    <form method="post">
-      <div class="row">
-        <div class="col-10">
-          <input class="form-control form-control-lg" type="text" name="name">
-        </div>
-        <div class="col-2 d-grid">
-          <button 
-            class="btn btn-outline-primary btn-lg" 
-            type="button"
-            hx-trigger="click"
-            hx-post="{% url "create-tasks" %}"
-            hx-target="#tasks">
-            NEW
-          </button>
-        </div>
-      </div>
-    </form>
-    <li class="border-top my-3" style="list-style-type: none;"></li>
-  </div>
-  <ul class="list-group list-group-flush d-grid gap-2 col-8 mx-auto" id="tasks">
-    {% for task in tasks %}
-      <li class="d-flex justify-content-between list-group-item list-group-item-action list-group-item-primary rounded-2 border border-5">
-        <div class="d-flex align-items-center">
-          {{ task.name }}
-        </div>
-        <div>
-          <button class="btn btn-sm btn-outline-success"
-            type="button"
-            hx-put="{% url "done-task" task.id %}"
-            hx-trigger="click"
-            hx-target="#tasks_done">
-            <i class="bi-check-circle"></i>
-          </button>
-          <button class="btn btn-sm btn-outline-primary"><i class="bi-pen"></i></button>
-          <button class="btn btn-sm btn-outline-danger"
-            hx-delete="{% url "delete-task" task.id %}"
-            hx-target="#tasks"
-            hx-confirm="Are you sure?"
-            kx-trigger="click">
-            <i class="bi-trash3"></i>
-          </button>
-        </div>
-      </li>
-    {% endfor %}
-  </ul>
-  <ul class="list-group list-group-flush d-grid gap-2 col-8 mx-auto" id="tasks_done">
-    <li class="border-top my-3" style="list-style-type: none;">
-    {% for task_done in tasks_done %}
-        <li class="d-flex justify-content-between list-group-item list-group-item-action list-group-item-success rounded-2 border border-5">
-          <div class="d-flex align-items-center">
-            <del>{{ task_done.name }}</del>
-          </div>
-          <div>
-            <button class="btn btn-sm btn-outline-secondary"
-              hx-put="{% url "undo-task" task_done.id %}"
-              hx-target="#tasks_done"
-              hx-trigger="click">
-              <i class="bi bi-arrow-up-left-circle"></i>
-            </button>
-            <button class="btn btn-sm btn-outline-danger"
-              hx-delete="{% url "delete-task" task_done.id %}"
-              hx-target="#tasks_done"
-              hx-confirm="Delete Task | Are you sure?"
-              kx-trigger="click">
-              <i class="bi-trash3"></i>
-            </button>
-          </div>
-        </li>
-      </li>
-    {% endfor %}
-  </ul>
+  {% if task %}
+    {% include "partials/tasks/tasks_edit_form.html" %}
+  {% else %}
+    {% include "partials/tasks/tasks_form.html" %}
+  {% endif %}
+  {% include "partials/tasks/tasks_to_do.html" %}
+  {% include "partials/tasks/tasks_done.html" %}
 {% endblock content %}
