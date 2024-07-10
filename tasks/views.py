@@ -1,3 +1,5 @@
+from http import HTTPStatus
+
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 
@@ -41,7 +43,8 @@ def tasks(request):
     return render(
         request=request, 
         template_name='tasks.html', 
-        context=context
+        context=context,
+        status=HTTPStatus.OK
     )
 
 
@@ -54,7 +57,8 @@ def get_task(request, task_id):
     return render(
         request=request, 
         template_name='tasks.html', 
-        context=context
+        context=context,
+        status=HTTPStatus.FOUND
     )
 
 
@@ -67,7 +71,8 @@ def create_tasks(request):
     return render(
         request=request, 
         template_name='tasks.html', 
-        context=context
+        context=context,
+        status=HTTPStatus.CREATED
     )
 
 
@@ -79,7 +84,8 @@ def tasks_done(request, task_id):
     return render(
         request=request, 
         template_name='tasks.html', 
-        context=context
+        context=context,
+        status=HTTPStatus.OK
     )
 
 
@@ -91,7 +97,8 @@ def tasks_undo(request, task_id):
     return render(
         request=request, 
         template_name='tasks.html', 
-        context=context
+        context=context,
+        status=HTTPStatus.OK
     )
 
 
@@ -103,7 +110,8 @@ def task_edit(request, task_id):
     return render(
         request=request, 
         template_name='tasks.html', 
-        context=context
+        context=context,
+        status=HTTPStatus.OK
     )
 
 
@@ -115,5 +123,6 @@ def tasks_delete(request, task_id):
     return render(
         request=request, 
         template_name='tasks.html', 
-        context=context
+        context=context,
+        status=HTTPStatus.OK
     )
