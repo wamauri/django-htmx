@@ -29,3 +29,8 @@ def tasks_form_data(db):
 @pytest.fixture
 def task_instace(db):
     return Tasks.objects.create(name='E')
+
+
+@pytest.fixture
+def task_without_name(db):
+    return {'name': ''}

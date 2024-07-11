@@ -5,7 +5,7 @@ from http import HTTPStatus
 from tasks.models import Tasks
 from .fixtures import (
     all_tasks, context, tasks_form_data,
-    task_instace
+    task_instace, task_without_name
 )
 
 
@@ -68,3 +68,10 @@ class TestTasksViews:
         res = self.c.post(url, data={'name': 'Task Name'})
         assert res.context[0]['tasks'][0].name == 'Task Name'
         assert res.context[0]['tasks'][0].name != 'A'
+
+    def test_task_create_returns_200_and_empty_field_message(self, task_without_name):
+        url = reverse('create-tasks')
+        res = self.c.post(url, task_without_name)
+        messages = list(res.context['messages'])
+        assert str(messages[0]) == 'The task name could not be empty!'
+        assert res.status_code == HTTPStatus.OK
