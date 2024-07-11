@@ -2,6 +2,7 @@ from http import HTTPStatus
 
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
+from django.contrib import messages
 
 from .models import Tasks
 
@@ -64,16 +65,29 @@ def get_task(request, task_id):
 
 @require_http_methods(['POST'])
 def create_tasks(request):
-    name = request.POST.get('name')
-    Tasks.objects.create(name=name)
-    context = build_context()
+    if request.method == 'POST':
+        status = None
+        name = request.POST.get('name')
 
-    return render(
-        request=request, 
-        template_name='tasks.html', 
-        context=context,
-        status=HTTPStatus.CREATED
-    )
+        if name:
+            Tasks.objects.create(name=name)
+            status = HTTPStatus.CREATED
+        else:
+            messages.add_message(
+                request=request, 
+                level=messages.ERROR, 
+                message='The task name could not be empty!',
+            )
+            status = HTTPStatus.OK
+
+        context = build_context()
+
+        return render(
+            request=request, 
+            template_name='tasks.html', 
+            context=context,
+            status=status
+        )
 
 
 @require_http_methods(['PUT'])
